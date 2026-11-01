@@ -1,3 +1,4 @@
+
 import express from "express";
 import cors from "cors";
 import helmet from "helmet";
@@ -17,10 +18,25 @@ const app = express();
 
 app.use(helmet());
 
+// Allowed frontend origins
+const allowedOrigins = [
+  "http://localhost:5173",
+  process.env.CLIENT_URL,
+  "https://devflow123-alpha.vercel.app",
+].filter(Boolean);
+
 app.use(
   cors({
-    origin: process.env.CLIENT_URL || "http://localhost:5173",
-  }),
+    origin: (origin, callback) => {
+      // Allow requests without an Origin header (e.g. health checks)
+      if (!origin || allowedOrigins.includes(origin)) {
+        return callback(null, true);
+      }
+
+      return callback(new Error(`CORS blocked origin: ${origin}`));
+    },
+    credentials: true,
+  })
 );
 
 app.use(express.json({ limit: "2mb" }));
@@ -32,7 +48,7 @@ app.use(
   rateLimit({
     windowMs: 15 * 60 * 1000,
     limit: 500,
-  }),
+  })
 );
 
 app.get("/api/health", (_req, res) => {
@@ -49,8 +65,6 @@ app.use("/api/tasks", taskRoutes);
 app.use("/api/tasks", commentRoutes);
 app.use("/api/notifications", notificationRoutes);
 app.use("/api/activities", activityRoutes);
-
-// New chat routes
 app.use("/api/chat", chatRoutes);
 
 app.use((req, res) => {
@@ -61,6 +75,12 @@ app.use((req, res) => {
 
 app.use((err, _req, res, _next) => {
   console.error(err);
+
+  if (err.message?.startsWith("CORS blocked origin:")) {
+    return res.status(403).json({
+      message: err.message,
+    });
+  }
 
   if (err.code === 11000) {
     return res.status(409).json({
