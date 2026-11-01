@@ -1,0 +1,210 @@
+:root {
+  font-family: "DM Sans", sans-serif;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  color-scheme: dark;
+  --bg: #0b0d14;
+  --sidebar: #10121b;
+  --panel: #141722;
+  --panel-2: #191d2a;
+  --input: #10131d;
+  --text: #f2f3fa;
+  --muted: #8c91a5;
+  --faint: #666c80;
+  --border: #252a3a;
+  --border-strong: #34394c;
+  --accent: #8b7cf6;
+  --accent-strong: #7865f4;
+  --accent-soft: rgba(139, 124, 246, 0.13);
+  --green: #37c995;
+  --orange: #f5a64a;
+  --red: #f27685;
+  --blue: #55b8ed;
+  --shadow: 0 18px 55px rgba(0, 0, 0, 0.28);
+}
+:root[data-theme="light"] {
+  color-scheme: light;
+  --bg: #f7f8fc;
+  --sidebar: #fff;
+  --panel: #fff;
+  --panel-2: #f5f6fb;
+  --input: #f7f8fc;
+  --text: #202236;
+  --muted: #777d91;
+  --faint: #9da2b1;
+  --border: #e9eaf1;
+  --border-strong: #dfe1eb;
+  --accent: #7667ed;
+  --accent-strong: #6755df;
+  --accent-soft: rgba(118, 103, 237, 0.1);
+  --green: #159e73;
+  --orange: #d88a2e;
+  --red: #dc6473;
+  --blue: #278fc8;
+  --shadow: 0 18px 55px rgba(34, 39, 70, 0.08);
+}
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: "DM Sans", sans-serif;
+}
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+button {
+  cursor: pointer;
+}
+a {
+  color: inherit;
+  text-decoration: none;
+}
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+::selection {
+  background: rgba(139, 124, 246, 0.3);
+}
+.page-loader {
+  min-height: 100vh;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 14px;
+  color: var(--muted);
+}
+.loader {
+  width: 28px;
+  height: 28px;
+  border: 3px solid var(--border);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+.primary-btn,
+.secondary-btn {
+  border: 0;
+  border-radius: 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  padding: 11px 16px;
+  font-weight: 700;
+  font-size: 13px;
+  transition:
+    transform 0.2s,
+    background 0.2s,
+    box-shadow 0.2s;
+}
+.primary-btn {
+  background: linear-gradient(135deg, #8979f5, #6f5ce8);
+  color: #fff;
+  box-shadow: 0 7px 18px rgba(119, 99, 235, 0.22);
+}
+.primary-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 24px rgba(119, 99, 235, 0.32);
+}
+.primary-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+.secondary-btn {
+  background: var(--panel-2);
+  border: 1px solid var(--border);
+  color: var(--text);
+}
+.secondary-btn:hover {
+  border-color: var(--border-strong);
+  background: var(--panel);
+}
+.icon-btn {
+  border: 0;
+  background: transparent;
+  color: var(--muted);
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 9px;
+}
+.icon-btn:hover {
+  background: var(--panel-2);
+  color: var(--text);
+}
+.inline-error,
+.form-error {
+  padding: 11px 13px;
+  border-radius: 10px;
+  background: rgba(242, 118, 133, 0.1);
+  border: 1px solid rgba(242, 118, 133, 0.24);
+  color: var(--red);
+  font-size: 13px;
+}
+.eyebrow,
+.page-eyebrow {
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  font-weight: 800;
+  color: var(--accent);
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+.status-chip {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 5px 9px;
+  border-radius: 20px;
+  white-space: nowrap;
+}
+.status-chip.planning {
+  color: var(--blue);
+  background: rgba(85, 184, 237, 0.12);
+}
+.status-chip.active {
+  color: var(--accent);
+  background: var(--accent-soft);
+}
+.status-chip.done {
+  color: var(--green);
+  background: rgba(55, 201, 149, 0.12);
+}
+.priority-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--orange);
+}
+.priority-dot.low {
+  background: var(--blue);
+}
+.priority-dot.high {
+  background: var(--orange);
+}
+.priority-dot.urgent {
+  background: var(--red);
+}
+.priority-dot.medium {
+  background: var(--accent);
+}
